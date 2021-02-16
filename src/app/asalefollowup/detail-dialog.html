@@ -1,0 +1,255 @@
+<h1 mat-dialog-title>Order ID: {{data.array.detailsarr.invid}} </h1>
+<h1 mat-dialog-title class="webname">
+  Website: {{data.array.detailsarr.web}}
+  <span class="dia-date">Order Date:{{data.array.detailsarr.date}}</span>
+</h1>
+<div mat-dialog-content>
+  <mat-grid-list cols="2" rowHeight="1:0.5">
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">CRM Details:</h2>
+      <p><b>Name:</b> {{data.array.detailsarr.name}} <b>Phone No:</b> {{data.array.detailsarr.phone}}</p>
+      <p><b>Address:</b> {{data.array.detailsarr.address}}, {{data.array.detailsarr.city}},
+        {{data.array.detailsarr.state}}-{{data.array.detailsarr.zip}}, {{data.array.detailsarr.country}}</p>
+      <p><b>Email:</b> {{data.array.detailsarr.email}}</p>
+      <p *ngIf='data.array.detailsarr.trck.length > 0'>
+        <span *ngFor='let id of data.array.detailsarr.trck'>
+          <b>Tracking ID:</b>
+          <span class="warning" *ngIf="!id.tracking_id"> <a href="https://t.17track.net/en#nums={{id}}" target="_blank">
+              {{id}}</a></span>
+          <span class="warning" *ngIf="id.tracking_id"> <a href="{{id.tracking_link}}">{{id.tracking_id}}</a></span><br>
+        </span>
+      </p>
+    </mat-grid-tile>
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Product Details:</h2>
+      <table class="pdetailstbl" cellspacing="0">
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let element of data.array.detailsarr.prname">
+          <td>{{element.pname}}</td>
+          <td>{{element.qty}}</td>
+          <td>{{element.price}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'"> ${{element.qty*element.price | number}}
+          </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'"> ${{element.price}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Sub Total :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{subtot}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">
+            ${{data.array.detailsarr.prname[0].price | number : '1.2-2'}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Shipping :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder' && subtot<350">$20.00</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder' || subtot>350">$00.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Discount :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{discount?discount:00}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">$00.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Total :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{total}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">
+            ${{data.array.detailsarr.prname[0].price | number : '1.2-2' }}
+          </td>
+        </tr>
+      </table>
+
+    </mat-grid-tile>
+
+  </mat-grid-list>
+  <div class="row" style="margin-top: -10px;">
+    <table cellpadding="0" cellspacing="0">
+      <tr>
+        <td
+          *ngIf="data.array.detailsarr.status=='Pending' || data.array.detailsarr.status=='Processed' || data.array.detailsarr.status=='Shipped' || data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered' ">
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Pending</b><br>
+          <span class="sts-txt">Payment awaiting</span>
+        </td>
+
+
+        <td
+          *ngIf="data.array.detailsarr.status=='Processed' || data.array.detailsarr.status=='Shipped' || data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered' ">
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Processed</b><br>
+          <span class="sts-txt">Payment Received</span>
+        </td>
+        <td
+          *ngIf="!(data.array.detailsarr.status == 'Processed' || data.array.detailsarr.status =='Shipped' || data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered')">
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Processed</b><br>
+          <span class="sts-txt">Payment Received</span>
+        </td>
+
+
+        <td
+          *ngIf="data.array.detailsarr.status=='Shipped' || data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered' ">
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Shipped</b><br>
+          <span class="sts-txt">Item Shipped</span>
+        </td>
+
+        <td
+          *ngIf="!(data.array.detailsarr.status =='Shipped' || data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered')">
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Shipped</b><br>
+          <span class="sts-txt">Item Shipped</span>
+        </td>
+
+
+
+
+        <td *ngIf="data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered' ">
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Tracked</b><br>
+          <span class="sts-txt">Received tracking id</span>
+        </td>
+        <td *ngIf="!(data.array.detailsarr.status=='Tracking' || data.array.detailsarr.status=='Delivered')">
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Tracked</b><br>
+          <span class="sts-txt">Received tracking id</span>
+        </td>
+
+        <td *ngIf=" data.array.detailsarr.status=='Delivered' ">
+          <span class="round-green"></span>
+          <br>
+          <b>Delivered</b><br>
+          <span class="sts-txt">Item Delivered</span>
+        </td>
+        <td *ngIf=" data.array.detailsarr.status!='Delivered' ">
+          <span class="round-gray"></span>
+          <br>
+          <b>Delivered</b><br>
+          <span class="sts-txt">Item Delivered</span>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="row" style="margin-top: 30px;">
+    <div class="compare">
+      <h2 class="heading">Followup section status</h2>
+      <button mat-mini-fab color="primary" >
+        <span class="material-icons">south</span>
+      </button>
+    </div>
+    <br>
+    <table cellpadding="0" cellspacing="0">
+      <tr>
+        <td
+          *ngIf="data.array.status=='NA' || data.array.status=='Processed' || data.array.status=='Shipped' || data.array.status=='Tracking' || data.array.status=='Delivered' ">
+          <span class="nofcall">{{data.array.numofcalls[0]}}</span>
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>NA</b><br>
+          <span class="sts-txt">Fisrt followup</span>
+        </td>
+
+
+        <td
+          *ngIf="data.array.status=='Processed' || data.array.status=='Shipped' || data.array.status=='Tracking' || data.array.status=='Delivered' ">
+          <span class="nofcall">{{data.array.numofcalls[1]}}</span>
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Processed</b><br>
+          <span class="sts-txt">Payment followup</span>
+        </td>
+        <td
+          *ngIf="!(data.array.status == 'Processed' || data.array.status =='Shipped' || data.array.status=='Tracking' || data.array.status=='Delivered')">
+          <span class="nofcall">0</span>
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Processed</b><br>
+          <span class="sts-txt">Payment followup</span>
+        </td>
+
+
+        <td *ngIf="data.array.status=='Shipped' || data.array.status=='Tracking' || data.array.status=='Delivered' ">
+          <span class="nofcall">{{data.array.numofcalls[2]}}</span>
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Shipped</b><br>
+          <span class="sts-txt">shipping followup</span>
+        </td>
+
+        <td *ngIf="!(data.array.status =='Shipped' || data.array.status=='Tracking' || data.array.status=='Delivered')">
+          <span class="nofcall">0</span>
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Shipped</b><br>
+          <span class="sts-txt">shipping followup</span>
+        </td>
+
+
+
+
+        <td *ngIf="data.array.status=='Tracking' || data.array.status=='Delivered' ">
+          <span class="nofcall">{{data.array.numofcalls[3]}}</span>
+          <span class="round-green"></span>
+          <div class="line-green"></div>
+          <br>
+          <b>Tracked</b><br>
+          <span class="sts-txt">Traking followup</span>
+        </td>
+        <td *ngIf="!(data.array.status=='Tracking' || data.array.status=='Delivered')">
+          <span class="nofcall">0</span>
+          <span class="round-gray"></span>
+          <div class="line-gray"></div>
+          <br>
+          <b>Tracked</b><br>
+          <span class="sts-txt">Traking followup</span>
+        </td>
+
+        <td *ngIf=" data.array.status=='Delivered' ">
+          <span class="round-green"></span>
+          <br>
+          <b>Delivered</b><br>
+          <span class="sts-txt">Delivery followup</span>
+        </td>
+        <td *ngIf=" data.array.status!='Delivered' ">
+          <span class="round-gray"></span>
+          <br>
+          <b>Delivered</b><br>
+          <span class="sts-txt">Delivery followup</span>
+        </td>
+
+      </tr>
+    </table>
+    <br>
+  </div>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</div>

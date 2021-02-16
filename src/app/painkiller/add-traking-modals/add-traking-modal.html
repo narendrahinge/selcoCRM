@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Add Tracking Id's</h1>
+<div mat-dialog-content>
+    <button mat-mini-fab color="primary" class="addBtn" (click)="add(data.tids)">
+            <i class="material-icons">add </i>
+    </button>
+    <mat-form-field *ngFor="let tid of data.tids">
+        <input matInput placeholder="Enter Tracking ID" [(ngModel)]="tid.trakingid">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data.tids">Submit</button>
+</div>

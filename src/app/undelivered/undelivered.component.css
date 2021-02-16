@@ -1,0 +1,122 @@
+.content {
+    padding: 10px;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 40px;
+    padding-left: 0px;
+}
+
+.filerpanel {
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+.filerpanel ul li {
+    display: flex;
+    float: right;
+    margin: 0px 17px 30px 31px;
+}
+ng-multiselect-dropdown {
+    font-size:15px;
+}
+
+.mat-elevation-z8 {
+    width:100%;
+}
+table {
+    width:100%;
+}
+.hide{
+    display: none;
+}
+.top-btn {
+    margin-right: -10px !important;
+}
+.approveBtn {
+    color:#505050;
+}
+.shippedBtn {
+    color:orange;
+}
+.confirmBtn {
+    color:#2f3eff;
+}
+.selItems {
+    color: #a2a2a2;
+    font-size: 13px;
+}
+.edit-icon {
+    margin-left: 5px;
+    padding: 0px 0px;
+    min-width: 35px;
+}
+.edit-icon .material-icons  {
+    font-size:19px;
+}
+.trakingids {
+    list-style: none;
+    margin-bottom: 4px;
+}
+.example-container p {
+    margin: 0px;
+}
+.loading {
+    width: 33px;
+    position: relative;
+    top: 10px;
+    bottom: 16px;
+}
+.stslod {
+    width: 25px;
+    top: -5px;
+    left: 34px;
+    display: none;
+}
+.nhide {
+    display: block;
+}
+.allorder {
+    min-width: 100%;
+    margin-left: 9%;
+}
+.selmethod {
+    max-height: 30px;
+}
+.selmethod .mat-form-field-wrapper{
+    margin-top: -26px !important;
+}
+.mysection  {
+    width: 90%;
+}
+.sectool {
+    margin-bottom: 10px;
+}
+.recivedbtn {
+    color:#fd2dff;
+  }
+.emailicon {
+    color:#f54a4a;
+    cursor: pointer; 
+}
+.emailids {
+    position: relative;
+    top: -7px;
+}
+.nameex {
+    color: #ff5f5f;
+    position: absolute;
+    margin-top: -8px;
+    margin-left: -12px;
+}   
+.notebox{
+    padding: 10px;
+    background-color: #fff;
+    width: fit-content;
+}
+.notebox ul {
+    padding: 0px;
+    margin: 0px;
+    padding-left: 10px;
+    margin-top: 10px;
+}

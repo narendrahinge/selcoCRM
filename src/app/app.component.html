@@ -1,0 +1,262 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #drawer mode="side" class="example-sidenav"
+    [ngStyle]="{ 'width.em': sidenavWidth, 'display':status? 'block':'none' }" opened="true" (mouseenter)="increase()"
+    (mouseleave)="decrease()">
+
+    <mat-toolbar color="primary">&nbsp;&nbsp;<img src="assets/image/slogo.png">&nbsp;<span
+        *ngIf="sidenavWidth > 6">CRM</span></mat-toolbar>
+    <mat-card class="userprofile">
+      <img src="assets/image/usericon.png"><br>
+      <span *ngIf="sidenavWidth > 14">Welcome Admin</span>
+    </mat-card>
+    <mat-nav-list>
+      <mat-list-item routerLink="" routerLinkActive="active">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item dashboardlink">
+          <h5>DASHBOARD</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/allorder" routerLinkActive="active">
+        <mat-icon mat-list-icon>account_balance</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>All Order</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/aftersalesfollowup" routerLinkActive="active">
+        <mat-icon mat-list-icon>phone_forwarded</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>After Sales Followup</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/undelivered" routerLinkActive="active">
+        <mat-icon mat-list-icon>sms_failed</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Undelivered orders</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/manualorder" routerLinkActive="active">
+        <mat-icon mat-list-icon>touch_app</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Manual Order</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/enquirys" routerLinkActive="active">
+        <mat-icon mat-list-icon>perm_phone_msg</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Customer Enquirs</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/cases" routerLinkActive="active">
+        <mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Customer Cases</h5>
+        </div>
+      </mat-list-item>
+
+       
+      <mat-list-item routerLink="/stripepay" routerLinkActive="active">
+        <mat-icon mat-list-icon>payments</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Stripe Marchant Gatway Orders</h5>
+        </div>
+      </mat-list-item>
+
+
+      <mat-list-item routerLink="/painkill" routerLinkActive="active">
+        <mat-icon mat-list-icon>queue</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Painkillermedicines.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/globalpharma" routerLinkActive="active">
+        <mat-icon mat-list-icon>language</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Globalpharmameds.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/drugstore" routerLinkActive="active">
+        <mat-icon mat-list-icon>child_friendly</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Drugstoreplanet.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/ordercp" routerLinkActive="active">
+        <mat-icon mat-list-icon>shopping_basket</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Ordercypionate.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/tramaex" routerLinkActive="active">
+        <mat-icon mat-list-icon>title</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Tramadolexport.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/tramasale" routerLinkActive="active">
+        <mat-icon mat-list-icon>title</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Tramadolsale.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/buytraolcod" routerLinkActive="active">
+        <mat-icon mat-list-icon>shopping_cart</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Buytramadolonlinecod.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/buyanxi" routerLinkActive="active">
+        <mat-icon mat-list-icon>local_pharmacy</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>buyanxietymedicines.com</h5>
+        </div>
+      </mat-list-item>
+
+
+      <mat-list-item routerLink="/tramhowto" routerLinkActive="active">
+        <mat-icon mat-list-icon>title</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Tramadol-howto.com</h5>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item routerLink="/adminreport" routerLinkActive="active">
+        <mat-icon mat-list-icon>message</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Admin Reports</h5>
+        </div>
+      </mat-list-item>
+
+
+      <mat-list-item routerLink="/statistics" routerLinkActive="active">
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <h5>Website Statistics</h5>
+        </div>
+      </mat-list-item>
+
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" *ngIf="status">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Selco CRM</span>
+      <ul class="headerprofile">
+        <li>
+          <img src="assets/image/usericon.png" [matMenuTriggerFor]="menu">
+          <i class="material-icons" [matMenuTriggerFor]="menu">
+            keyboard_arrow_down
+          </i>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="Logout()">Logout</button>
+          </mat-menu>
+        </li>
+        <li>
+          <span matBadge="{{todayOrderi}}" routerLink="" matBadgeOverlap="false" matTooltip="Todays Order's"
+            matBadgeColor="accent">
+            <i class="material-icons">
+              notification_important
+            </i>
+          </span>
+        </li>
+        <li>
+          <span matBadge="{{tenqury}}" routerLink="/enquirys" matBadgeOverlap="false" matTooltip="Todays Enquiries"
+            matBadgeColor="accent">
+            <i class="material-icons">
+              perm_phone_msg
+            </i>
+          </span>
+        </li>
+        <li>
+          <span matBadge="{{tissue}}" routerLink="/cases" matBadgeOverlap="false" matTooltip="Todays Customer Issues"
+            matBadgeColor="warn">
+            <i class="material-icons">
+              format_list_bulleted
+            </i>
+          </span>
+        </li>
+        <li>
+          <span class="grantpermission" matBadgeOverlap="false" matTooltip="Grant permission access"
+            matBadgeColor="warn">
+            <i class="material-icons" (click)="showpopup()">
+              verified_user
+            </i>
+          </span>
+          <div class="popover" *ngIf="popvisiable">
+            <h3><i class="material-icons">bookmarks</i> Grant Permission</h3>
+            <div class="tb-data">
+              <table class="table" cellpadding="0">
+                <tr>
+                  <th>Web</th>
+                  <th>Order ID</th>
+                  <th>Phone</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+                <tr *ngFor="let item of grantdata">
+                  <td>
+                    <span class="webini" *ngIf="item.web!='tramadolsale.com'">{{item.web | slice:0:3 }}</span>
+                    <span class="webini" *ngIf="item.web=='tramadolsale.com'">TRS</span>
+                  </td>
+                  <td>{{item.oid | slice:0:7 }}</td>
+                  <td>{{item.phone}}</td>
+                  <td>{{item.name | slice:0:5 }}</td>
+                  <td>
+                    <i class="material-icons tbl-sts" (click)="grantpermission(item.id)" [ngClass]="{'stsdone':item.status==2}" >adjust</i>
+                    <i class="material-icons tbl-sts2" (click)="deletephonegrant(item.id)" >delete</i>
+                  </td>
+                </tr>
+                <tr *ngIf="noprec">
+                  <td colspan="5" class="noprecords">
+                      Sorry! no data found
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="todaydate">
+            Date: {{currDate}}
+          </span>
+        </li>
+      </ul>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

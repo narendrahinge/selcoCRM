@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Add Tracking Id's</h1>
+<div mat-dialog-content>
+    <button *ngIf="!data.del" mat-mini-fab color="primary" class="addBtn" (click)="add(data.tids)">
+        <i class="material-icons">add </i>
+    </button>
+    <div class="rownew" *ngFor="let tid of data.tids; let i = index">
+        <mat-form-field>
+            <input matInput placeholder="Enter Tracking ID" [(ngModel)]="tid.trakingid">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+            <input matInput placeholder="Enter Tracking Link" [(ngModel)]="tid.trakinglink">
+        </mat-form-field>
+        <button mat-mini-fab color="warn" *ngIf="data.del" (click)="deltracking(data.tids, i, tid.ids, data.web)">
+            <span class="material-icons">delete_forever</span>
+        </button>
+    </div>
+    <br>
+    <button mat-raised-button (click)="onNoClick()" class="cancelBtn">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data.tids">Submit</button>
+</div>

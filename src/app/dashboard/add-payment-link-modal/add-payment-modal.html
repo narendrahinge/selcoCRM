@@ -1,0 +1,11 @@
+<h1 mat-dialog-title *ngIf="!data.shipp">Add Payment Link</h1>
+<h1 mat-dialog-title *ngIf="data.shipp">Update Payment Link</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+            <input matInput [(ngModel)]="data.shipp"  placeholder="Add Payment Link">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]="data.shipp" >Ok</button>
+</div>

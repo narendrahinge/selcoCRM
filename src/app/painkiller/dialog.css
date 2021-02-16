@@ -1,0 +1,72 @@
+.mat-grid-tile {
+    box-shadow: -3px 2px 4px 0px #e0e0e0;
+    border-radius: 10px;
+    overflow-x: scroll;
+    /*height: -webkit-fill-available;*/
+}
+.mat-grid-tile .mat-figure {
+    right: unset !important;;
+    bottom: unset !important;
+    align-items: inherit;
+}
+
+.matpanel p {
+    padding-left: 10px;
+}
+.dia-date {
+    float: right;
+}
+.mat-dialog-title {
+    margin: -24px -24px 18px;
+    display: block;
+    padding: 11px 26px;
+    background-color: #00c7aa;
+    color: #fff;
+    border-bottom: 2px solid #f98e33;
+}
+.mat-grid-list {
+    margin-bottom: 10px !important;
+    /*height: 321px !important;
+    padding-bottom: 13px !important;*/
+}
+.addTraking {
+    margin-top: 20px;
+}
+.stot {
+    text-align:right;
+}
+.pdetailstbl th {
+    border-top:1px solid  #38c7aa;
+}
+.pdetailstbl th, .pdetailstbl td {
+    border-bottom:1px solid  #38c7aa;
+    border-left:1px solid  #38c7aa;
+    border-right:1px solid  #38c7aa;
+}
+.pdetailstbl th:first-child, .pdetailstbl td:first-child {
+    border-left:1px solid  #38c7aa;
+    border-right:0px;
+}
+.pdetailstbl th:last-child, .pdetailstbl td:last-child {
+    border-left:0px;
+    border-right:1px solid  #38c7aa;
+}
+.loading {
+    width: 33px;
+    position: relative;
+    top: 10px;
+    bottom: 16px;
+}
+.stslod {
+    width: 25px;
+    top: 5px;
+    left: 14px;
+    display: none;
+    float: right;
+    margin-top: 23px;
+    margin-right: 60px;
+    margin-left: -25px;
+}
+.nhide {
+    display: block;
+}

@@ -1,0 +1,68 @@
+<div class="container">
+  <h3 class="subhead">
+    Website Analytics
+  </h3>
+  <img src="assets/image/loadingpng.gif" class="loading stslod " [ngClass]="{'nhide':loadSts}">
+
+
+  <mat-grid-list cols="2" rowHeight="2:0.15">
+    <mat-grid-tile>
+      <mat-button-toggle-group class="togglebtn" name="fontStyle" aria-label="Font Style" [(value)]="selected"
+        (click)="datafetch(selected)">
+        <mat-button-toggle value="d10">10 Day</mat-button-toggle>
+        <mat-button-toggle value="d15">15 Day</mat-button-toggle>
+        <mat-button-toggle value="m1">Months</mat-button-toggle>
+        <mat-button-toggle value="m6">6 Months</mat-button-toggle>
+        <mat-button-toggle value="y1">Year</mat-button-toggle>
+        <mat-button-toggle value="all">All</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-select class="linechartdrop" [(value)]="selectedLinechart" (selectionChange)="barchartFilter(selectedLinechart)">
+        <mat-option value="painkillermedicines.com">painkillermedicines.com</mat-option>
+        <mat-option value="globalpharmamedicines.com">globalpharmamedicines.com</mat-option>
+        <mat-option value="drugstoreplanet.com">drugstoreplanet.com</mat-option>
+        <mat-option value="ordercypionate.com">ordercypionate.com</mat-option>
+        <mat-option value="tramadolexport.com">tramadolexport.com</mat-option>
+        <mat-option value="tramadolsale.com">tramadolsale.com</mat-option>
+        <mat-option value="buyanxietymedicines.com">buyanxietymedicines.com</mat-option>
+        <mat-option value="bytramadolonlinecod.com">buytramadolonlinecod.com</mat-option>
+        <mat-option value="thtramadol-howto.com">thtramadol-howto.com</mat-option>
+        <mat-option value="Manualorder">Manualorder</mat-option>
+      </mat-select>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="2" rowHeight="2:1" class="chartblock">
+    <mat-grid-tile >
+      <canvas id="bar"></canvas>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <canvas id="lineChart"></canvas>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="1" rowHeight="1:0.6" class="chartblock">
+    <mat-grid-tile>
+        <h2 class="charttitle">How to compare of all website 2020?</h2>
+        <canvas id="combinelineChart20"></canvas>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list cols="1" rowHeight="1:0.6" class="chartblock">
+      <mat-grid-tile>
+          <h2 class="charttitle">How to compare of all website 2019?</h2>
+          <canvas id="combinelineChart"></canvas>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    
+    <mat-grid-list cols="1" rowHeight="1:0.6" class="chartblock">
+      <mat-grid-tile>
+          <h2 class="charttitle">How many manual orders per months?</h2>
+          <canvas id="manualocchart"></canvas>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+</div>

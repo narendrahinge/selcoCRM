@@ -1,0 +1,427 @@
+<div class="container">
+    <mat-tab-group (selectedTabChange)="tabClick($event)">
+        <mat-tab label="Open Cases">
+            <mat-form-field class="search-form-field allorder" floatLabel="never">
+                <input matInput [(ngModel)]="searchKey" placeholder="Quick Find Open Cases" class="serachInput"
+                    autocomplete="off" (keyup)="applyFilter()">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"
+                    (click)="onSearchClear()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="example-container mat-elevation-z8 " #TABLE>
+                <table mat-table #table [dataSource]="openCasesData" matSort>
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="web">
+                        <th mat-header-cell *matHeaderCellDef> Web </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="webini"
+                                *ngIf="element.web!='tramadolsale.com'">{{element.web | slice:0:3 }}</span>
+                            <span class="webini" *ngIf="element.web=='tramadolsale.com'">TRS</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="case_id">
+                        <th mat-header-cell *matHeaderCellDef> Case ID </th>
+                        <td mat-cell *matCellDef="let element">{{element.case_id }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="orderid">
+                        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.invid | slice:0:13 }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef> Case Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-mini-fab color="warn" (click)="composeEmail(element.email, element.web)">
+                                <i class="material-icons">mail_outline</i>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="issue">
+                        <th mat-header-cell *matHeaderCellDef> issue </th>
+                        <td mat-cell *matCellDef="let element"> {{element.issue | slice:0:35 }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="timestamp">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="primary" class="actionbtn">
+                                <i class="material-icons" (click)="openDialog_opencase(element.case_id)">
+                                    arrow_forward
+                                </i>
+                            </button>
+                            <mat-slide-toggle color="primary" (click)="changecasests(element.id)"
+                                [checked]="element.status==1">Closed</mat-slide-toggle>
+                            <i *ngIf="element.note.length>0" class="material-icons noteheight"
+                                (click)="openDialog_opencase(element.case_id)">note_add</i>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <b>Sorry!</b> No data Available.
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="loading">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <img src="assets/image/loading.gif" class="loading"> Loading data...
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsopencases"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsopencases;" (click)="selctrow(row)"
+                        [ngClass]="{'selected':selectrow==row.id}"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['loading']"
+                        [ngClass]="{'hide': openCasesData != Null || !nor}"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':nor}"></tr>
+                </table>
+                <mat-paginator #openCasesPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="9"
+                    showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-tab>
+        <mat-tab label="Close Cases">
+            <mat-form-field class="search-form-field allorder" floatLabel="never">
+                <input matInput [(ngModel)]="searchKeyclose" placeholder="Quick Find Close Cases" class="serachInput"
+                    autocomplete="off" (keyup)="applyFilterclosecase()">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKeyclose"
+                    (click)="onSearchClearclosecase()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="example-container mat-elevation-z8 " #TABLE2>
+                <table mat-table #table2 [dataSource]="closeCasesData" matSort>
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="web">
+                        <th mat-header-cell *matHeaderCellDef> Web </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="webini"
+                                *ngIf="element.web!='tramadolsale.com'">{{element.web | slice:0:3 }}</span>
+                            <span class="webini" *ngIf="element.web=='tramadolsale.com'">TRS</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="case_id">
+                        <th mat-header-cell *matHeaderCellDef> Case ID </th>
+                        <td mat-cell *matCellDef="let element">{{element.case_id }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="orderid">
+                        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.invid | slice:0:13 }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef> Case Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-mini-fab color="warn" (click)="composeEmail(element.email, element.web)">
+                                <i class="material-icons">mail_outline</i>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="issue">
+                        <th mat-header-cell *matHeaderCellDef> issue </th>
+                        <td mat-cell *matCellDef="let element"> {{element.issue | slice:0:35 }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="timestamp">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="primary" class="actionbtn">
+                                <i class="material-icons" (click)="openDialog_closecase(element.case_id)">
+                                    arrow_forward
+                                </i>
+                            </button>
+                            <button mat-raised-button mat-icon-button color="warn" class="dltbtn"
+                                (click)="deletecases(element.id)">
+                                <i class="material-icons">
+                                    delete
+                                </i>
+                            </button>
+                            <mat-slide-toggle color="primary" (click)="reopenchangecasests(element.id)"
+                                [checked]="element.status==1">Reopen Case</mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="noData2">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <b>Sorry!</b> No data Available.
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="loading2">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <img src="assets/image/loading.gif" class="loading"> Loading data...
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsopencases"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsopencases;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['loading2']"
+                        [ngClass]="{'hide': closeCasesData != Null || !nor2}"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['noData2']" [ngClass]="{'hide':nor2}"></tr>
+                </table>
+                <mat-paginator #closeCasesPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="9"
+                    showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Customer Reports">
+            <mat-form-field class="search-form-field allorder" floatLabel="never">
+                <input matInput [(ngModel)]="searchKeycustrep" placeholder="Quick Find Customer Reports"
+                    class="serachInput" autocomplete="off" (keyup)="applyFiltercustreport()">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKeycustrep"
+                    (click)="onSearchClearcustreport()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="example-container mat-elevation-z8 " #TABLE3>
+                <table mat-table #table3 [dataSource]="fetchcustRepData" matSort>
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="web">
+                        <th mat-header-cell *matHeaderCellDef> Web </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="webini"
+                                *ngIf="element.web!='tramadolsale.com'">{{element.web | slice:0:3 }}</span>
+                            <span class="webini" *ngIf="element.web=='tramadolsale.com'">TRS</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="order_id">
+                        <th mat-header-cell *matHeaderCellDef> Order ID </th>
+                        <td mat-cell *matCellDef="let element">{{element.order_id }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="timestamp">
+                        <th mat-header-cell *matHeaderCellDef> Date </th>
+                        <td mat-cell *matCellDef="let element">{{element.timestamp | date: 'dd/MM/yyyy' }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cname">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cname }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="cno">
+                        <th mat-header-cell *matHeaderCellDef>Email </th>
+                        <td mat-cell *matCellDef="let element">
+                            
+                            <button mat-mini-fab color="warn" (click)="composeEmail(element.cno, element.web)">
+                                <i class="material-icons"  >mail_outline</i>
+                              </button> 
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="issue">
+                        <th mat-header-cell *matHeaderCellDef class="cust-issues-th"> issue </th>
+                        <td mat-cell *matCellDef="let element" class="cust-issues-td">
+
+
+                            <mat-accordion>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            {{element.issue | slice:0:50 }}
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="message-block">
+                                        <div class="user-msg">
+                                            {{element.issue}}
+                                            <span class="time"> {{element.timestamp | date:'dd/MM/yyyy h:m a' }}</span>
+                                        </div>
+                                        <div *ngFor="let item of element.conversation">
+                                            <div class="admin-msg" *ngIf="item.admin_msg">
+                                                {{item.admin_msg}}
+                                                <span class="time"> {{item.timestamp | date:'dd/MM/yyyy h:m a' }}</span>
+                                            </div>
+                                            <div class="user-msg" *ngIf="item.user_msg">
+                                                {{item.user_msg}}
+                                                <span class="time"> {{item.timestamp | date:'dd/MM/yyyy h:m a' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="send-message-block">
+                                        <mat-form-field class="example-full-width input-block" floatLabel="never">
+                                            <textarea matInput placeholder="Type a message" [(ngModel)]="messageBody"
+                                                class="textarea-msg"></textarea>
+                                        </mat-form-field>
+                                        <button mat-stroked-button mat-raised-button mat-icon-button color="primary"
+                                            class="send-message" (click)="sendmessage(element.id)">
+                                            <i class="material-icons">
+                                                send
+                                            </i>
+                                        </button>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-raised-button mat-icon-button color="warn" class="dltbtn"
+                                (click)="deletecustreport(element.id)">
+                                <i class="material-icons">
+                                    delete
+                                </i>
+                            </button>
+                            <mat-slide-toggle color="primary" (click)="changecustissuestatus(element.id)"
+                                [checked]="element.status==1">Complete</mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="noData3">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <b>Sorry!</b> No data Available.
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="loading3">
+                        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+                            <img src="assets/image/loading.gif" class="loading"> Loading data...
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnscustrep"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnscustrep;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['loading3']"
+                        [ngClass]="{'hide': fetchcustRepData != Null || !nor3}"></tr>
+                    <tr mat-footer-row *matFooterRowDef="['noData3']" [ngClass]="{'hide':nor3}"></tr>
+                </table>
+                <mat-paginator #custRepPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="9"
+                    showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-tab>
+        <mat-tab label="Open New Case">
+            <div class="tab-content">
+                <div class="idsearchbar">
+                    <mat-grid-list cols="2" rowHeight="2:0.3">
+                        <mat-grid-tile>
+                            <mat-form-field class="orderidblock">
+                                <mat-label>Select Website</mat-label>
+                                <mat-select [(value)]="selweb">
+                                    <mat-option *ngFor="let web of websiteList" [value]="web.url">
+                                        {{web.url}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="orderidblock">
+                                <input matInput placeholder="#INV-XXXXXX" [(ngModel)]="oid">
+                            </mat-form-field>
+                            <button mat-raised-button mat-icon-button color="primary" (click)="processiod(oid, selweb)">
+                                <i class="material-icons">
+                                    send
+                                </i>
+                            </button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <!--<mat-grid-list cols="1" rowHeight="1:0.05">
+                        <mat-grid-tile>
+                            <p class="loadingoid" [ngClass]="{'nhide':loadSts}">
+                                <img src="assets/image/loadingpng.gif" class="loading stslod ">
+                                <span>
+                                    Please wait while we process the order id
+                                </span>
+                            </p>
+                        </mat-grid-tile>
+                    </mat-grid-list>-->
+
+                </div>
+                <div class="resblock" [ngClass]="{'nhide':loadcompleted}">
+                    <div class="col-6">
+                        <h2 class="blocktitle">Customer Details</h2>
+                        <h3>ORDER ID: <b>{{fetcharr.invid}}</b></h3>
+                        <h3>ORDER DATE: <b>{{fetcharr.date}}</b></h3>
+                        <h4>NAME: <b>{{fetcharr.name}}</b></h4>
+                        <h4>ADDRESS: <b>{{fetcharr.address}}</b></h4>
+                        <h4>EMAIL: <b>{{fetcharr.email}}</b></h4>
+                        <h4>PHONE: <b>{{fetcharr.cno}}</b></h4>
+                        <h2 class="blocktitle">Order Details</h2>
+                        <table class="pdetailstbl" cellspacing="0">
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            <tr *ngFor="let element of fetcharr.prname">
+                                <td>{{element.pname}}</td>
+                                <td>{{element.qty}}</td>
+                                <td>{{element.price}}</td>
+                                <td class="stot" *ngIf="fetcharr.web!='Manualorder'">
+                                    ${{element.qty*element.price | number}}</td>
+                                <td class="stot" *ngIf="fetcharr.web=='Manualorder'"> ${{element.price}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Sub Total :</b> </td>
+                                <td class="stot" *ngIf="fetcharr.web!='Manualorder'">${{subtot}}</td>
+                                <td class="stot" *ngIf="fetcharr.web=='Manualorder'">
+                                    ${{fetcharr.prname[0].price | number : '1.2-2'}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Shipping :</b> </td>
+                                <td class="stot" *ngIf="fetcharr.web!='Manualorder' && total<350">$20.00</td>
+                                <td class="stot" *ngIf="fetcharr.web=='Manualorder' || total>350">$00.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Discount :</b> </td>
+                                <td class="stot" *ngIf="fetcharr.web!='Manualorder'">${{discount?discount:00}}</td>
+                                <td class="stot" *ngIf="fetcharr.web=='Manualorder'">$00.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Total :</b> </td>
+                                <td class="stot" *ngIf="fetcharr.web!='Manualorder'">${{total}}</td>
+                                <td class="stot" *ngIf="fetcharr.web=='Manualorder'">
+                                    ${{fetcharr.prname[0].price | number : '1.2-2' }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field class="issuedropdown">
+                            <mat-label>Select issue</mat-label>
+                            <mat-select [(value)]="selissue" (selectionChange)="custonissuetoggle(selissue)">
+                                <mat-option value="I have not received tracking Id yet.">I have not received tracking Id
+                                    yet.</mat-option>
+                                <mat-option value="Tracking does not show any result on tracking site.">Tracking does
+                                    not show any result on tracking site.</mat-option>
+                                <mat-option value="I have not received my delivery yet.">I have not received my delivery
+                                    yet.</mat-option>
+                                <mat-option value="Package not moving from New York customs.">Package not moving from
+                                    New York customs.</mat-option>
+                                <mat-option value="My package got delivered to another address.">My package got
+                                    delivered to another address.</mat-option>
+                                <mat-option value="diff_issue">I have different issue</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="issuedropdown" *ngIf="imshow">
+                            <textarea matInput placeholder="Custom issue" rows="5" [(ngModel)]="issuebrif"></textarea>
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" class="cretabtn" (click)="createCase(fetcharr)">Create
+                            an Case</button>
+                    </div>
+                </div>
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

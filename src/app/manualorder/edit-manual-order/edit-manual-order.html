@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Edit Manual Order</h1>
+<div mat-dialog-content>
+    <mat-grid-list cols="2" rowHeight="2:2">
+        <mat-grid-tile>
+            <label class="sectiontitle"> <i class="material-icons"> ballot</i> Product Details</label>
+            <div class="example-container editmanualorder">
+                <mat-form-field >
+                        <input matInput placeholder="Product Name" [(ngModel)]="data.array.prname[0].pname">
+                </mat-form-field>
+
+                <mat-form-field >
+                        <input matInput placeholder="Product Quantity" [(ngModel)]="data.array.prname[0].qty">
+                </mat-form-field>
+
+                <mat-form-field >
+                        <input matInput placeholder="Product Total" [(ngModel)]="data.array.prname[0].price">
+                </mat-form-field>
+
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+                <label class="sectiontitle"> <i class="material-icons"> how_to_reg</i> Customer Details</label>
+                <div class="example-container editmanualorder">
+                    <mat-form-field >
+                            <input matInput placeholder="Customer Name" [(ngModel)]="data.array.name">
+                    </mat-form-field>
+    
+                    <mat-form-field >
+                            <input matInput placeholder="Address" [(ngModel)]="data.array.address">
+                    </mat-form-field>
+    
+                    <mat-form-field >
+                            <input matInput placeholder="City" [(ngModel)]="data.array.city">
+                    </mat-form-field>
+                    <mat-form-field >
+                            <input matInput placeholder="Zip" [(ngModel)]="data.array.zip">
+                    </mat-form-field>
+                    <mat-form-field >
+                            <input matInput placeholder="State" [(ngModel)]="data.array.state">
+                    </mat-form-field>
+                    <mat-form-field >
+                            <input matInput placeholder="Country" [(ngModel)]="data.array.country">
+                    </mat-form-field>
+                    <mat-form-field >
+                            <input matInput placeholder="Email" [(ngModel)]="data.array.email">
+                    </mat-form-field>
+                    <mat-form-field >
+                            <input matInput placeholder="Phone No" [(ngModel)]="data.array.phone">
+                    </mat-form-field>
+    
+                </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button [mat-dialog-close]="data.array" color="primary" cdkFocusInitial>Update</button>
+</div>

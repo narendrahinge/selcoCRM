@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>New Message</h1>
+<div mat-dialog-content>
+    
+    <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="Subject"  [(ngModel)]="data.subject" >
+        </mat-form-field>
+      
+        <angular-editor [(ngModel)]="data.body" class="composemailbody" [config]="editorConfig" ></angular-editor>
+      </div>
+    
+      <button mat-raised-button class="cmailcancel" (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]="data">Send</button>
+</div>

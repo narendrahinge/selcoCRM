@@ -1,0 +1,268 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+body {
+    margin:0px;
+}
+.mat-fab.mat-accent, .mat-flat-button.mat-accent, .mat-mini-fab.mat-accent, .mat-raised-button.mat-accent {
+  background-color: #f39a00;
+  color: #fff;
+}
+
+button[mattooltip="Export As Excel" ] {
+  display: none;
+}
+.matpanel .mat-figure {
+  right: unset !important;
+  bottom: unset !important;
+  align-items: inherit !important;
+  display: block !important;
+  justify-content: left !important;
+  width:100% !important;
+}
+.matpanel .heading {
+    color: #00c7aa;
+    margin: 0px;
+    margin-left: 10px;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 17px;
+    height: fit-content;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.mat-tab-label {
+    height: 34px !important;
+    min-width: 109px !important;
+}
+.mat-menu-panel button {
+  color:#fff;
+  cursor: pointer;
+}
+.mat-menu-panel {
+  border-radius: 0px !important;
+  margin-right: -11px !important;
+  background: #00a282 !important;
+  cursor: pointer;
+}
+.mat-menu-panel .mat-menu-content {
+  padding: 0px !important;
+}
+
+.mat-tab-body-content {
+    overflow: auto;
+}
+/* width */
+.mat-tab-body-content::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  /* Track */
+  .mat-tab-body-content::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .mat-tab-body-content::-webkit-scrollbar-thumb {
+    background: #fff; 
+  }
+  
+  /* Handle on hover */
+  .mat-tab-body-content::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
+/*Dashboard Styles*/
+  .multiselect-dropdown .dropdown-btn {
+    border: 1px solid #38c7aa !important;
+    outline:0px;
+    color: #a2a2a2;
+}
+
+.multiselect-dropdown .dropdown-down {
+  border-top: 10px solid #38c7aa !important;
+}
+
+.dropdown-list .filter-textbox {
+  overflow: hidden !important;
+}
+.dropdown-list {
+  margin-top: 2px !important;
+  min-width: 224px;
+  width: auto !important;
+}
+
+.multiselect-item-checkbox input[type=checkbox] + div:before {
+  color: #38c7aa !important;
+  border: 2px solid #38c7aa !important;
+}
+.multiselect-item-checkbox input[type=checkbox]:checked + div:before {
+  background: #38c7aa !important;
+}
+.multiselect-dropdown .dropdown-btn .selected-item {
+  border: 1px solid #f99907 !important;
+  background: #f79100 !important;
+}
+.dropdown-list .item2 {
+  max-height:300px !important;
+}
+mat-nav-list .active .mat-ripple {
+  border-right: 3px solid #ec9705;
+}
+
+
+/* filter controls */
+.search-div{
+    margin: 10px;
+}
+.search-form-field{
+  width: 100%;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border-radius: 25px;
+  min-width: 500px;
+  border: 1px solid #a29d9d;
+}
+.search-form-field div.mat-form-field-underline {
+    display: none;
+}
+.search-form-field div.mat-form-field-infix{
+    border-top: 0px;
+    font-size: 15px;
+    color: #b5b5b5;
+}
+
+.search-form-field div.mat-form-field-wrapper{
+  padding-bottom: 0px;
+}
+.search-form-field div.mat-form-field-suffix button{
+  height: 32px;
+  width: 32px;
+}
+.serachInput {
+color:#595a5a !important;
+}
+
+.noDatacls {
+  text-align: center;
+  color: red;
+}
+.warn {
+  color:red;
+}
+.warning {
+  color: #f59200;
+}
+.success {
+  color: #38c7aa;
+}
+.recivedbtn {
+  color:#fd2dff;
+}
+.mat-progress-spinner svg { 
+  height:50px !important;
+  width:50px !important;
+}
+
+.selmethod .mat-form-field-wrapper{
+  margin-top: -3px !important;
+}
+.selmethod .mat-form-field-infix {
+  font-size: 15px;
+  color: #969c9b;
+  padding-top: 3px;
+}
+.selmethod .mat-select-arrow-wrapper, .selmethod .mat-select-value-text {
+  color:#38c7aa;
+}
+.selmethod .mat-form-field-underline {
+  background-color: #c7c7c7;
+  color:#c7c7c7;
+}
+.mat-button-toggle .mat-button-toggle-label-content {
+  line-height: 35px !important;
+  font-size: 13px;
+}
+.tidslink {
+  text-decoration: none;
+  color:#9100ff;
+}
+.composemailbody .angular-editor-textarea {
+  min-height: 150px !important;
+  height: auto !important;
+}
+.editmanualorder .mat-form-field-infix {
+  padding: 0.3375em 0;
+  border: 0px;
+  font-size: 13px;
+}
+.editmanualoc .mat-dialog-container {
+  overflow: hidden;
+}
+.cancelBtnsts {
+  background-color: red;
+  color: #fff !important;
+  border-color: #dc1d1d !important;
+}
+.webini {
+  text-transform: uppercase;
+  border: 1px solid #38c7aa;
+  padding: 3px 2px;
+}
+.addpaymentlink {
+  height: 24px;
+  line-height: 0px !important;
+  margin: 0px 0px 10px 10px !important;
+}
+.shipping-tempo {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.selected {
+  background-color: #defff8;
+  cursor: pointer;
+}
+
+.phoneicon {
+  position: relative;
+  top: 6px;
+  color: #00b6ff;
+  font-size: 20px;
+  cursor:pointer;
+}
+.dropdownblock {
+    position: absolute;
+    z-index: 50000;
+    box-shadow: 0px 4px 6px 1px grey;
+    top: 66px;
+    right: 30px;
+    top: 64.25px;
+    left: 4.5px;
+    height: 268.75px;
+    width: 386.5px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #ffdcdc;
+    border-radius: 10px;
+  }
+
+  /* width */
+  .example-sidenav .mat-drawer-inner-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.example-sidenav .mat-drawer-inner-container::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.example-sidenav .mat-drawer-inner-container::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.example-sidenav .mat-drawer-inner-container::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}

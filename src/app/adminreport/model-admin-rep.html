@@ -1,0 +1,12 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>User Name</mat-label>
+      <input matInput placeholder="XXXXX XXXX" name="username" [(ngModel)]="data.name">
+    </mat-form-field>
+  
+    <mat-form-field class="example-full-width">
+      <mat-label>Leave a comment</mat-label>
+      <textarea matInput placeholder="Ex. It makes me feel..." name="comment" [(ngModel)]="data.issue"></textarea>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" >Save</button>

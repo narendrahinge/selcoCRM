@@ -1,0 +1,170 @@
+<div class="content">
+  <mat-toolbar>
+    <span matBadge="{{todayOrderi}}" matBadgeOverlap="false" matBadgeColor="warn"> Total Orders</span>
+    <img src="assets/image/loadingpng.gif" class="loading stslod " [ngClass]="{'nhide':loadSts}">
+    <div class="filerpanel">
+      <ul>
+        <li>
+          <ng-multiselect-dropdown [placeholder]="'Sort By Status'" [data]="statusList"
+            [(ngModel)]="statausSelectedItem" [settings]="dropdownSettingsStatus"
+            (onSelect)="onItemSelectStatus($event)" (onDeSelect)="onDeselectStatus($event)">
+          </ng-multiselect-dropdown>
+
+        </li>
+        <li class="top-btn">
+          <button mat-mini-fab matTooltip="Export As Excel" color="primary" (click)="ExportTOExcel()">
+            <i class="material-icons">
+              arrow_downward
+            </i>
+          </button>
+        </li>
+        <li>
+          <span class="selItems">Selected items: {{selItems}}</span>
+        </li>
+        <li>
+          <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Filter By Table Data" class="serachInput"
+              autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar>
+
+  <div class="example-container mat-elevation-z8 " #TABLE>
+
+    <table mat-table #table [dataSource]="listData" matSort>
+      <ng-container matColumnDef="inc">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Payment Status </th>
+        <td mat-cell *matCellDef="let element">
+          <button *ngIf="element.status=='Pending'" mat-stroked-button color="warn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Undelivered'" mat-stroked-button color="accent" class="confirmBtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Tracking'" mat-stroked-button color="accent" class="recivedbtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Processed'" mat-stroked-button color="warn" class="approveBtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Shipped'" mat-stroked-button color="primary" class="shippedBtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Delivered'" mat-stroked-button color="primary">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Cancelled' " mat-stroked-button color="primary" class="cancelBtnsts">
+            {{element.status}}
+          </button>
+          <button mat-stroked-button color="primary" class="edit-icon" matTooltip="Edit Order Status"
+            (click)="updateStatus(element.oid, element.status)">
+            <i class="material-icons ">
+              edit
+            </i>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="invid">
+        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.invid}} </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-mini-fab color="accent" (click)="makecall(element.phone, element.country)">
+            <i class="material-icons"  >phone</i>
+          </button>      
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-mini-fab color="warn" (click)="composeEmail(element.email, element.web)">
+            <i class="material-icons"  >mail_outline</i>
+          </button>      
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="shsts">
+        <th mat-header-cell *matHeaderCellDef> Shpping Company </th>
+        <td mat-cell *matCellDef="let element">
+          <p *ngIf="element.shsts">{{element.shsts}}</p>
+          <p *ngIf="!element.shsts">
+            <button mat-mini-fab color="accent" (click)="addshipping(element.oid)">
+              <i class="material-icons">add</i>
+            </button>
+          </p>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="trck">
+        <th mat-header-cell *matHeaderCellDef> Traking ID </th>
+        <td mat-cell *matCellDef="let element">
+          <p *ngIf="element.trck">
+            <li *ngFor="let ids of element.trck" class="trakingids">
+              <a class="tidslink" *ngIf="ids.tracking_id" target="_blank" href="https://t.17track.net/en#nums={{ids?.tracking_id}}">{{ ids?.tracking_id }}</a>
+              <a class="tidslink" *ngIf="!ids.tracking_id" target="_blank" href="https://t.17track.net/en#nums={{ids}}">{{ ids }}</a>
+            </li>
+          </p>
+          <p *ngIf="element.trck.length==0">
+            <!-- Disabled add Traking ID button when shipping company is empty-->
+            <button mat-mini-fab color="primary" (click)="addTrakingid(element.oid)" *ngIf="element.status !='Shipped'" disabled>
+              <i class="material-icons">location_on</i>
+            </button>
+            <button mat-mini-fab color="primary" (click)="addTrakingid(element.oid)" *ngIf="element.status =='Shipped'">
+              <i class="material-icons">location_on</i>
+            </button>
+          </p>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="oid">
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" class="actionbtn">
+            <i class="material-icons" (click)="openDialog(element.inc)">
+              arrow_forward
+            </i>
+          </button>
+          <button mat-icon-button color="warn" class="actionbtn">
+            <i class="material-icons" (click)="deleteOrder(element.oid)">
+              delete_outline
+            </i>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <td mat-footer-cell *matFooterCellDef colspan="10" class="noDatacls">
+          <b>Sorry!</b> No data Available.
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <td mat-footer-cell *matFooterCellDef colspan="10" class="noDatacls">
+          <img src="assets/image/loading.gif" class="loading"> Loading data...
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selctrow(row)" [ngClass]="{'selected':selectrow==row.inc}"></tr>
+      <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></tr>
+      <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':nor}"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="9" showFirstLastButtons></mat-paginator>
+  </div>
+
+  
+</div>

@@ -1,0 +1,46 @@
+.mat-dialog-title {
+    margin: 0px;
+    background-color: #403f3f;
+    margin-top: -24px;
+    margin-left: -24px;
+    width: 110%;
+    padding: 1px 24px;
+    font-size: 15px;
+    color: #ffb328;
+}
+mat-dialog-container {
+    overflow: hidden;
+}
+.mat-grid-list {
+    margin-top:10px;
+}
+.sectiontitle {
+    color: #38c7aa;
+    font-size: 15px;
+    letter-spacing: 3px;
+    width: 100%;
+    position: absolute;
+    top: -5px;
+}
+.sectiontitle i {
+    position: relative;
+    top: 5px;
+    font-size: 18px;
+}
+.example-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    top: 19px;
+    padding-right: 32px;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  .example-container .mat-form-field-infix {
+    padding: 0.3375em 0;
+    border: 0px;
+    font-size: 13px;
+}

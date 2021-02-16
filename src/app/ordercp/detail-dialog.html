@@ -1,0 +1,83 @@
+<h1 mat-dialog-title>Order ID: {{data.array.invid}} Details <span class="dia-date">Order Date:
+    {{data.array.date}}</span></h1>
+<div mat-dialog-content>
+  <mat-grid-list cols="3" rowHeight="3:4">
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Order Details:</h2>
+      <p><b>Name:</b> {{data.array.name}}</p>
+      <p><b>Address:</b> {{data.array.address}}</p>
+      <p><b>City:</b> {{data.array.city}}</p>
+      <p><b>Zip:</b> {{data.array.zip}}</p>
+      <p><b>State:</b> {{data.array.state}}</p>
+      <p><b>Country:</b> {{data.array.country}}</p>
+      <p><b>Email:</b> {{data.array.email}}</p>
+      <p><b>Phone No:</b> {{data.array.phone}}</p>
+    </mat-grid-tile>
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Payment Details:</h2>
+      <p><b>Card No:</b> {{data.array.cno}}</p>
+      <p><b>Card Expiry:</b> {{data.array.cex}}</p>
+      <p><b>CVV:</b> {{data.array.cvv}}</p>
+      <p><b>Name On Card:</b> {{data.array.noc}}</p>
+
+      <h2 class="heading">Shipping Details:</h2>
+      <p *ngIf='data.array.trck.length > 0'>
+        <b>Shippment Status:</b>  <span class="warning"> {{data.array.shsts}}</span><br/><br/>
+        <b>Tracking ID:</b> <span  class="warning"> {{data.array.trck}}</span>
+        <br />
+        <button mat-raised-button color="warn" class="addTraking" (click)="resendTrakingid(data.array.oid, data.array.web)">Resend Tracking ID Mail</button>
+        <img src="assets/image/loadingpng.gif" class="loading stslod " [ngClass]="{'nhide':stslod, 'hide':!stslod}">
+      </p>
+
+      <p *ngIf='data.array.trck.length==0'>
+        <b>Shippment Status:</b> <span class="warn"> Empty</span><br/><br/>
+        <b>Tracking ID:</b> <span  class="warn">Empty</span>
+        <br />
+        <button mat-raised-button color="warn" class="addTraking" (click)="addTraking(data.array.oid, data.array.web)" *ngIf="data.array.status !='Shipped'" disabled>Add Tracking ID</button>
+        <button mat-raised-button color="warn" class="addTraking" (click)="addTraking(data.array.oid, data.array.web)" *ngIf="data.array.status =='Shipped'" >Add Tracking ID</button>
+      </p>
+
+
+    </mat-grid-tile>
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Product Details:</h2>
+      <br/>
+      <table class="pdetailstbl" cellspacing="0">
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let element of data.array.prname">
+          <td>{{element.pname}}</td>
+          <td>{{element.qty}}</td>
+          <td>{{element.price}}</td>
+          <td class="stot"> ${{element.qty*element.price | number}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Sub Total  :</b> </td>
+          <td class="stot" >${{subtot}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Shipping  :</b> </td>
+          <td class="stot" *ngIf="subtot>350">$00.00</td>
+          <td class="stot" *ngIf="subtot<350">$20.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Discount  :</b> </td>
+          <td class="stot" >${{discount?discount:00}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Total :</b> </td>
+          <td class="stot" >${{total}}</td>
+        </tr>
+      </table>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</div>

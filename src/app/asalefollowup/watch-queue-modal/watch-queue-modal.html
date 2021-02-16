@@ -1,0 +1,224 @@
+<div mat-dialog-content class="modal-dialog">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>
+                Quelist
+            </h3>
+        </div>
+        <div class="col-sm-8">
+            <h3>Current Queue: {{currval?.detailsarr.invid}}</h3>
+        </div>
+    </div>
+</div>
+
+
+<div mat-dialog-content class="modal-dialog2">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>
+                <ul *ngIf="actuallist.length > 0">
+                    <li *ngFor="let inv of data.array" (click)="getcurrrecords(inv)">
+                        {{inv.detailsarr.invid}}
+                    </li>
+                </ul>
+                <p *ngIf="actuallist.length==0" style="color:#ffadad;">Empty queue list</p>
+            </h3>
+        </div>
+        <div class="col-sm-8" *ngIf="actuallist.length == 0">
+            <p style="color:red;font-weight: bold;">Sorry! cant found any data</p>
+        </div>
+        <div class="col-sm-8" *ngIf="actuallist.length > 0">
+
+            <p><b>Name:</b> {{currval?.detailsarr.name}} <b>Phone No:</b> {{currval?.detailsarr.phone}}</p>
+            <p><b>Address:</b> {{currval?.detailsarr.address}}, {{currval?.detailsarr.city}},
+                {{currval?.detailsarr.state}}-{{currval?.detailsarr.zip}}, {{currval?.detailsarr.country}}</p>
+            <p><b>Email:</b> {{currval?.detailsarr.email}}</p>
+            <br>
+            <div class="row" style="margin-top: -10px;">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td
+                            *ngIf="currval?.detailsarr.status=='Pending' || currval?.detailsarr.status=='Processed' || currval?.detailsarr.status=='Shipped' || currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Pending</b><br>
+                            <span class="sts-txt">Payment awaiting</span>
+                        </td>
+                        <td
+                            *ngIf="currval?.detailsarr.status=='Processed' || currval?.detailsarr.status=='Shipped' || currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Processed</b><br>
+                            <span class="sts-txt">Payment Received</span>
+                        </td>
+                        <td
+                            *ngIf="!(currval?.detailsarr.status == 'Processed' || currval?.detailsarr.status =='Shipped' || currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered')">
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Processed</b><br>
+                            <span class="sts-txt">Payment Received</span>
+                        </td>
+
+
+                        <td
+                            *ngIf="currval?.detailsarr.status=='Shipped' || currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Shipped</b><br>
+                            <span class="sts-txt">Item Shipped</span>
+                        </td>
+
+                        <td
+                            *ngIf="!(currval?.detailsarr.status =='Shipped' || currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered')">
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Shipped</b><br>
+                            <span class="sts-txt">Item Shipped</span>
+                        </td>
+
+
+
+
+                        <td *ngIf="currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Tracked</b><br>
+                            <span class="sts-txt">Received tracking id</span>
+                        </td>
+                        <td
+                            *ngIf="!(currval?.detailsarr.status=='Tracking' || currval?.detailsarr.status=='Delivered')">
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Tracked</b><br>
+                            <span class="sts-txt">Received tracking id</span>
+                        </td>
+
+                        <td *ngIf=" currval?.detailsarr.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <br>
+                            <b>Delivered</b><br>
+                            <span class="sts-txt">Item Delivered</span>
+                        </td>
+                        <td *ngIf=" currval?.detailsarr.status!='Delivered' ">
+                            <span class="round-gray"></span>
+                            <br>
+                            <b>Delivered</b><br>
+                            <span class="sts-txt">Item Delivered</span>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <hr>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td
+                            *ngIf="currval?.status=='NA' || currval?.status=='Processed' || currval?.status=='Shipped' || currval?.status=='Tracking' || currval?.status=='Delivered' ">
+                            <span class="nofcall">{{currval.numofcalls[0]}}</span>
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>NA</b><br>
+                            <span class="sts-txt">Fisrt followup</span>
+                        </td>
+
+
+                        <td
+                            *ngIf="currval?.status=='Processed' || currval?.status=='Shipped' || currval?.status=='Tracking' || currval?.status=='Delivered' ">
+                            <span class="nofcall">{{currval.numofcalls[1]}}</span>
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Processed</b><br>
+                            <span class="sts-txt">Payment followup</span>
+                        </td>
+                        <td
+                            *ngIf="!(currval?.status == 'Processed' || currval?.status =='Shipped' || currval?.status=='Tracking' || currval?.status=='Delivered')">
+                            <span class="nofcall">0</span>
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Processed</b><br>
+                            <span class="sts-txt">Payment followup</span>
+                        </td>
+
+
+                        <td
+                            *ngIf="currval?.status=='Shipped' || currval?.status=='Tracking' || currval?.status=='Delivered' ">
+                            <span class="nofcall">{{currval.numofcalls[2]}}</span>
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Shipped</b><br>
+                            <span class="sts-txt">shipping followup</span>
+                        </td>
+
+                        <td
+                            *ngIf="!(currval?.status =='Shipped' || currval?.status=='Tracking' || currval?.status=='Delivered')">
+                            <span class="nofcall">0</span>
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Shipped</b><br>
+                            <span class="sts-txt">shipping followup</span>
+                        </td>
+
+
+
+
+                        <td *ngIf="currval?.status=='Tracking' || currval?.status=='Delivered' ">
+                            <span class="nofcall">{{currval.numofcalls[3]}}</span>
+                            <span class="round-green"></span>
+                            <div class="line-green"></div>
+                            <br>
+                            <b>Tracked</b><br>
+                            <span class="sts-txt">Traking followup</span>
+                        </td>
+                        <td *ngIf="!(currval?.status=='Tracking' || currval?.status=='Delivered')">
+                            <span class="nofcall">0</span>
+                            <span class="round-gray"></span>
+                            <div class="line-gray"></div>
+                            <br>
+                            <b>Tracked</b><br>
+                            <span class="sts-txt">Traking followup</span>
+                        </td>
+
+                        <td *ngIf=" currval?.status=='Delivered' ">
+                            <span class="round-green"></span>
+                            <br>
+                            <b>Delivered</b><br>
+                            <span class="sts-txt">Delivery followup</span>
+                        </td>
+                        <td *ngIf=" currval?.status!='Delivered' ">
+                            <span class="round-gray"></span>
+                            <br>
+                            <b>Delivered</b><br>
+                            <span class="sts-txt">Delivery followup</span>
+                        </td>
+
+                    </tr>
+                </table>
+                <br>
+
+            </div>
+            <div class="row" style="margin-top: 30px;">
+
+                <button mat-raised-button color="accent" (click)="startcall(currval)">Start call</button>
+                <button mat-raised-button color="warn" layout-align="end" style="margin-left: 30px;" [mat-dialog-close]="">End call</button>
+                <button mat-raised-button style="margin-left: 30px;" [mat-dialog-close]="" >Cancel</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

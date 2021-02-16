@@ -1,0 +1,225 @@
+<div class="container">
+  <img src="assets/image/loadingpng.gif" class="loading stslod " [ngClass]="{'nhide':loadSts}">
+
+  <mat-tab-group>
+    <mat-tab label="Add New Order">
+      <div class="cols">
+        <mat-card>
+          <div class="example-container">
+            <label class="sectiontitle"> <i class="material-icons"> ballot</i> Product Details</label>
+            <mat-form-field>
+              <input matInput placeholder="Product Name" [(ngModel)]="userdata.pname">
+            </mat-form-field>
+
+            <mat-grid-list cols="2" rowHeight="2:0.5">
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="Product Quantity" [(ngModel)]="userdata.pqty">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="Total Amount" [(ngModel)]="userdata.ptot">
+                </mat-form-field>
+                <small class="tipinfo">Enter amount without $ sign</small>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <mat-select placeholder="Payment Status" [(ngModel)]="userdata.paymentsts">
+                    <mat-option value="Pending">Pending</mat-option>
+                    <mat-option value="Received">Received</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </mat-card>
+
+
+
+      </div>
+      <div class="cols col2">
+        <mat-card>
+          <div class="example-container">
+            <label class="sectiontitle"> <i class="material-icons"> how_to_reg</i> Customer Details</label>
+            <mat-form-field>
+              <input matInput placeholder="Customer Name" [(ngModel)]="userdata.cname">
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput placeholder="Address" [(ngModel)]="userdata.cadd"></textarea>
+            </mat-form-field>
+            <mat-grid-list cols="2" rowHeight="2:0.5">
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="City" [(ngModel)]="userdata.ccity">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="State" [(ngModel)]="userdata.cstate">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="Zip" [(ngModel)]="userdata.czip">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput placeholder="Country" [(ngModel)]="userdata.ccountry">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-form-field>
+              <input matInput placeholder="Email" [(ngModel)]="userdata.cemail">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Phone" [(ngModel)]="userdata.cphone">
+            </mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" (click)="saveData()">Submit</button>
+          <button mat-raised-button color="warn" class="btnwarn" (click)="clearData()">Clear</button>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Manual Order List">
+      <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Filter By Table Data" class="serachInput"
+          autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <span class="selItems">Selected items: {{selItems}}</span>
+
+      <div class="example-container mat-elevation-z8 " #TABLE>
+
+        <table mat-table #table [dataSource]="listData" matSort>
+          <ng-container matColumnDef="inc">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Payment Status </th>
+            <td mat-cell *matCellDef="let element">
+              <button *ngIf="element.status=='Pending'" mat-stroked-button color="warn">
+                {{element.status}}
+              </button>
+              <button *ngIf="element.status=='Received'" mat-stroked-button color="accent" class="recivedbtn">
+                {{element.status}}
+              </button>
+              <button *ngIf="element.status=='Approved'" mat-stroked-button color="warn" class="approveBtn">
+                {{element.status}}
+              </button>
+              <button *ngIf="element.status=='Shipped'" mat-stroked-button color="primary" class="shippedBtn">
+                {{element.status}}
+              </button>
+              <button *ngIf="element.status=='Delivered'" mat-stroked-button color="primary">
+                {{element.status}}
+              </button>
+              <button *ngIf="element.status=='Cancelled'" mat-stroked-button color="primary" class="cancelBtnsts">
+                {{element.status}}
+              </button>
+              <button mat-stroked-button color="primary" class="edit-icon" matTooltip="Edit Order Status"
+                (click)="updateStatus(element.oid, element.status)">
+                <i class="material-icons ">
+                  edit
+                </i>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="invid">
+            <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.invid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Phone </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-mini-fab color="accent" (click)="makecall(element.phone, element.country)">
+                <i class="material-icons"  >phone</i>
+              </button>   
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-mini-fab color="warn" (click)="composeEmail(element.email, element.web)" >
+                <i class="material-icons" >mail_outline</i>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="trck">
+            <th mat-header-cell *matHeaderCellDef> Traking ID </th>
+            <td mat-cell *matCellDef="let element">
+              <p *ngIf="element.trck">
+                <li *ngFor="let ids of element.trck" class="trakingids">
+                  <a class="tidslink" target="_blank"
+                    href="https://t.17track.net/en#nums={{ids}}">{{ ids }}</a>
+                </li>
+              </p>
+              <p *ngIf="element.trck.length==0">
+                <!-- Disabled add Traking ID button when shipping company is empty-->
+                <button mat-mini-fab color="primary" (click)="addTrakingid(element.oid)"
+                  *ngIf="element.status !='Shipped'" disabled>
+                  <i class="material-icons">location_on</i>
+                </button>
+                <button mat-mini-fab color="primary" (click)="addTrakingid(element.oid)"
+                  *ngIf="element.status =='Shipped'">
+                  <i class="material-icons">location_on</i>
+                </button>
+              </p>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="oid">
+            <th mat-header-cell *matHeaderCellDef> Details </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" matTooltip="Edit Manual Order" class="actionbtn">
+                <i class="material-icons" (click)="openEditDialog(element.inc)">
+                  edit
+                </i>
+              </button>
+              <button mat-icon-button color="primary" class="actionbtn">
+                <i class="material-icons" (click)="openDialog(element.inc)">
+                  arrow_forward
+                </i>
+              </button>
+              <button mat-icon-button color="warn" class="actionbtn">
+                <i class="material-icons" (click)="deleteOrder(element.oid)">
+                  delete_outline
+                </i>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="noData">
+            <td mat-footer-cell *matFooterCellDef colspan="10" class="noDatacls">
+              <b>Sorry!</b> No data Available.
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="loading">
+            <td mat-footer-cell *matFooterCellDef colspan="10" class="noDatacls">
+              <img src="assets/image/loading.gif" class="loading"> Loading data...
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selctrow(row)" [ngClass]="{'selected':selectrow==row.inc}"></tr>
+          <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></tr>
+          <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':nor}"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="9" showFirstLastButtons></mat-paginator>
+      </div>
+
+
+
+    </mat-tab>
+  </mat-tab-group>
+
+</div>

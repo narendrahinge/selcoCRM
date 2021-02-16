@@ -1,0 +1,19 @@
+.actionlist{
+    list-style: none;
+}
+.search-form-field {
+    width: 78%;
+    border-radius: 25px;
+    min-width: 127px;
+    margin-top:20px;
+}
+.addBtn {
+    float: right;
+    margin: 10px;
+}
+.cancelBtn {
+    margin-right: 20px;
+}
+.mat-dialog-content {
+    padding-bottom: 20px;
+}

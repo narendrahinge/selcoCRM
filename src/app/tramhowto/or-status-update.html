@@ -1,0 +1,16 @@
+
+<h1 mat-dialog-title>Update Order Status</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Select Order Status </mat-label>
+    <mat-select [(ngModel)]="data.stsVal">
+        <mat-option *ngFor="let status of ststusList"  [value]="status.item_text">
+            {{status.item_text}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary"  [mat-dialog-close]="data.stsVal" >Update</button>
+</div>

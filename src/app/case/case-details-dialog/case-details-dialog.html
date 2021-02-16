@@ -1,0 +1,115 @@
+<h1 mat-dialog-title>Order ID: {{data.array.invid}} </h1>
+<h1 mat-dialog-title class="webname">
+    Website: {{data.array.web}}
+    <span class="dia-date">Case Date:{{data.array.date}}</span>
+</h1>
+<div mat-dialog-content>
+    <mat-grid-list cols="2" rowHeight="3:3">
+        <mat-grid-tile class="matpanel">
+            <div class="innercontent">
+                <h2 class="heading">Case Details:</h2>
+
+                <button mat-button mat-icon-button id="addnote" (click)="togglenote()">
+                    <i class="material-icons">note_add</i>
+                </button>
+                <div class="dropdownblock" *ngIf="togglediv">
+                    <div class="noteblock" >
+                        <div class="single-div" *ngFor="let item of data.array.note; let i=index">
+                            <i class="material-icons deliconnote" (click)="deletenote(item.id, i)">cancel</i>
+                            {{item.case_note}}
+                        </div>
+                    </div>
+                    <mat-form-field class="example-full-width" floatLabel="never" color="warn">
+                        <textarea matInput placeholder="Type Note here.." [(ngModel)]="notetext"></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button mat-icon-button class="savenote" (click)="addnote(data.array.id)"
+                        color="primary">
+                        <i class="material-icons">save</i>
+                    </button>
+                </div>
+
+                <p><b>Name:</b> {{data.array.name}}</p>
+                <p><b>Address:</b> {{data.array.address}}</p>
+                <p><b>Email:</b> {{data.array.email}}</p>
+                <p><b>Phone No:</b> {{data.array.phone}}</p>
+                <p><b>Isuue:</b> {{data.array.issue}}</p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="matpanel">
+            <div class="innercontent">
+                <h2 class="heading">Product Details:</h2>
+                <br />
+                <table class="pdetailstbl" cellspacing="0">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr *ngFor="let element of data.array.prname">
+                        <td>{{element.p_name}}</td>
+                        <td>{{element.qty}}</td>
+                        <td>{{element.price}}</td>
+                        <td class="stot" *ngIf="data.array.web!='Manualorder'"> ${{element.qty*element.price | number}}
+                        </td>
+                        <td class="stot" *ngIf="data.array.web=='Manualorder'"> ${{element.price}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Sub Total :</b> </td>
+                        <td class="stot" *ngIf="data.array.web!='Manualorder'">${{subtot}}</td>
+                        <td class="stot" *ngIf="data.array.web=='Manualorder'">
+                            ${{data.array.prname[0].price | number : '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Shipping :</b> </td>
+                        <td class="stot" *ngIf="data.array.web!='Manualorder' && total<350">$20.00</td>
+                        <td class="stot" *ngIf="data.array.web=='Manualorder' || total>350">$00.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Discount :</b> </td>
+                        <td class="stot" *ngIf="data.array.web!='Manualorder'">${{discount?discount:00}}</td>
+                        <td class="stot" *ngIf="data.array.web=='Manualorder'">$00.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Total :</b> </td>
+                        <td class="stot" *ngIf="data.array.web!='Manualorder'">${{total}}</td>
+                        <td class="stot" *ngIf="data.array.web=='Manualorder'">
+                            ${{data.array.prname[0].price | number : '1.2-2' }}
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <h2 class="heading">Reshippment Details:</h2>
+                <button mat-stroked-button color="warn" class="reship" (click)="addTraking(data.array.id )">
+                    <i class="material-icons">
+                        arrow_back_ios
+                    </i>
+                    <i class="material-icons shipping-tempo">
+                        local_shipping
+                    </i>
+                </button>
+                <p><b>Reshippment Tracking ID'S:</b></p>
+                <ul>
+                    <li *ngFor="let item of data.array.trakings">
+                        <a class="tidslink" target="_blank"
+                            href="https://t.17track.net/en#nums={{item}}">{{ item | slice:0:13 }}</a>
+                    </li>
+                </ul>
+                <br>
+                <button mat-stroked-button color="warn" class="reship" *ngIf='data.array.trakings.length > 0'
+                    (click)="resendTrakingidcases(data.array.id)">
+                    <i class="material-icons"> mail_outline</i> Resned Traking ID Mail
+                </button>
+                <button mat-stroked-button color="warn" class="reship" *ngIf='data.array.trakings.length == 0' disabled>
+                    <i class="material-icons"> mail_outline</i> Resned Traking ID Mail
+                </button>
+            </div>
+
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</div>

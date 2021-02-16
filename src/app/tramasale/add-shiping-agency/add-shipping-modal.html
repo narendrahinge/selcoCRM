@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Add Shipping</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+            <input matInput [(ngModel)]="data.shipp"  placeholder="Add Shipping">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="accent" [mat-dialog-close]="data.shipp" >Ok</button>
+</div>

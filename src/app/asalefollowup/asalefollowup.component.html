@@ -1,0 +1,169 @@
+<div class="content">
+  <mat-toolbar>
+    <span matBadge="{{todayOrderi}}" matBadgeOverlap="false" matBadgeColor="warn"> Total Orders</span>
+    <img src="assets/image/loadingpng.gif" class="loading stslod " [ngClass]="{'nhide':loadSts}">
+    <div class="filerpanel">
+      <ul>
+       
+        <li class="top-btn">
+          <button mat-mini-fab matTooltip="Export As Excel" color="primary" (click)="ExportTOExcel()">
+            <i class="material-icons">
+              arrow_downward
+            </i>
+          </button>
+        </li>
+        <li class="top-btn">
+          <button mat-raised-button color="accent" matTooltip="Queue list pending for the followup" (click)="watchqueue()">Followup Queue List</button>
+        </li>
+        <li>
+          <ng-multiselect-dropdown [placeholder]="'Sort By Status'" [data]="statusList"
+            [(ngModel)]="statausSelectedItem" [settings]="dropdownSettingsStatus"
+            (onSelect)="onItemSelectStatus($event)" (onDeSelect)="onDeselectStatus($event)">
+          </ng-multiselect-dropdown>
+
+        </li>
+        <li>
+          <span class="selItems">Selected items: {{selItems}}</span>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar>
+  <mat-toolbar class="sectool">
+    <div class="mysection">
+      <mat-form-field class="search-form-field allorder" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Filter By Table Data" class="serachInput"
+          autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <br />
+    </div>
+  </mat-toolbar>
+
+
+  <div class="example-container mat-elevation-z8 " #TABLE>
+
+    <table mat-table #table [dataSource]="listData" matSort>
+      <ng-container matColumnDef="inc">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Aftersales followup Status </th>
+        <td mat-cell *matCellDef="let element">
+          <button  mat-stroked-button *ngIf="element.status=='NA'" color="warn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Tracking'" mat-stroked-button color="accent" class="recivedbtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Processed'" mat-stroked-button color="warn" class="approveBtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Shipped'" mat-stroked-button color="primary" class="shippedBtn">
+            {{element.status}}
+          </button>
+          <button *ngIf="element.status=='Delivered'" mat-stroked-button color="primary">
+            {{element.status}}
+          </button>
+
+          <button *ngIf="element.status=='Undelivered'" mat-stroked-button color="primary" class="cancelBtnsts">
+            {{element.status}}
+          </button>
+          <button mat-stroked-button color="primary" class="edit-icon" matTooltip="Edit Order Status"
+            (click)="updateStatus(element.id, element.status)">
+            <i class="material-icons ">
+              edit
+            </i>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="web">
+        <th mat-header-cell *matHeaderCellDef> Web </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="webini" *ngIf="element.detailsarr.web!='tramadolsale.com'">{{element.web | slice:0:3 }}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="invid">
+        <th mat-header-cell *matHeaderCellDef> Invoice ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.detailsarr.invid | slice:0:13 }} </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.timestamp | date:'d/M/y'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef> Phone </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="accent" (click)="makecall(element.detailsarr.phone, element.detailsarr.country)">
+            <i class="material-icons"  >phone</i>
+            {{element.phone}}
+          </button> 
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="warn" (click)="composeEmail(element.detailsarr.email, element.detailsarr.web)" >
+            <i class="material-icons" >mail_outline</i>
+          </button>
+
+          
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.detailsarr.name}} 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="prname">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.detailsarr.web!='Manualorder'"> ${{calculateTotal(element.detailsarr.inc) }}</span>
+          <span *ngIf="element.detailsarr.web=='Manualorder'"> ${{element.detailsarr.prname[0].price | number : '1.2-2' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="oid">
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let element">
+
+          <button mat-mini-fab color="primary" class="actionbtn" style="margin-right: 20px;" matTooltip="Order Details">
+            <i class="material-icons" (click)="openDialog(element.id)">
+              arrow_forward
+            </i> 
+          </button>
+          <button mat-mini-fab color="warn" class="actionbtn" matTooltip="Delete Order">
+            <i class="material-icons" (click)="deleteOrder(element.id)">
+              delete_outline
+            </i>
+          </button>
+
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+          <b>Sorry!</b> No data Available.
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <td mat-footer-cell *matFooterCellDef colspan="12" class="noDatacls">
+          <img src="assets/image/loading.gif" class="loading"> Loading data...
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selctrow(row)"
+        [ngClass]="{'selected':selectrow==row.id}"></tr>
+      <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': listData != Null || !nor}"></tr>
+      <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':nor}"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="8" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+
+</div>

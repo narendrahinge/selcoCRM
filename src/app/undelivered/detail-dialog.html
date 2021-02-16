@@ -1,0 +1,99 @@
+<h1 mat-dialog-title>Order ID: {{data.array.detailsarr.invid}} </h1>
+<h1 mat-dialog-title class="webname">
+  Website: {{data.array.detailsarr.web}}
+  <span class="dia-date">Order Date:{{data.array.detailsarr.date}}</span>
+</h1>
+<div mat-dialog-content>
+  <mat-grid-list cols="3" rowHeight="3:4">
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Order Details:</h2>
+      <p><b>Name:</b> {{data.array.detailsarr.name}}</p>
+      <p><b>Address:</b> {{data.array.detailsarr.address}}</p>
+      <p><b>City:</b> {{data.array.detailsarr.city}}</p>
+      <p><b>Zip:</b> {{data.array.detailsarr.zip}}</p>
+      <p><b>State:</b> {{data.array.detailsarr.state}}</p>
+      <p><b>Country:</b> {{data.array.detailsarr.country}}</p>
+      <p><b>Email:</b> {{data.array.detailsarr.email}}</p>
+      <p><b>Phone No:</b> {{data.array.detailsarr.phone}}</p>
+    </mat-grid-tile>
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Issue:</h2>
+      <div class="notebox">
+        <ul *ngIf="data.array.issue">
+          <li>
+            {{data.array.issue[0].main}}
+            <ul *ngIf="data.array.issue[0].arr?.smain">
+              <li>
+                {{data.array.issue[0].arr?.smain}}
+                <ul *ngIf="data.array.issue[0].arr?.arr">
+                  <li>
+                    {{data.array.issue[0].arr.arr}}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul *ngIf="!data.array.issue">
+          <li>Issue from the Followup or main order section</li>
+        </ul>
+        <br>
+        <div style="background-color: #e8e8e8;padding:5px;" *ngIf="data.array.image!=''">
+          <a href="{{data.array.image}}" target="_blank">Attached file</a>
+          <br>
+          <br>  
+          <b>Note:</b> {{data.array.note}}
+        </div>
+        
+      </div>
+
+
+    </mat-grid-tile>
+    <mat-grid-tile class="matpanel">
+      <h2 class="heading">Product Details:</h2>
+      <br />
+      <table class="pdetailstbl" cellspacing="0">
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let element of data.array.detailsarr.prname">
+          <td>{{element.pname}}</td>
+          <td>{{element.qty}}</td>
+          <td>{{element.price}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'"> ${{element.qty*element.price | number}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'"> ${{element.price}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Sub Total :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{subtot}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">${{data.array.detailsarr.prname[0].price | number : '1.2-2'}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Shipping :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder' && subtot<350">$20.00</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder' || subtot>350">$00.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Discount :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{discount?discount:00}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">$00.00</td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Total :</b> </td>
+          <td class="stot" *ngIf="data.array.detailsarr.web!='Manualorder'">${{total}}</td>
+          <td class="stot" *ngIf="data.array.detailsarr.web=='Manualorder'">${{data.array.detailsarr.prname[0].price | number : '1.2-2' }}
+          </td>
+        </tr>
+      </table>
+
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</div>

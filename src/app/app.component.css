@@ -1,0 +1,136 @@
+mat-tab-group {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+.headerprofile {
+  float: right;
+  width:100%;
+}
+.headerprofile img {
+  width:30px;
+  height:30px;
+}
+.headerprofile li {
+  display: flex;
+  float: right;
+  margin: 10px 0px 10px 19px;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 50px;
+    padding-left: 0px;
+}
+
+.sidenav-container {
+    height: 100%;
+  }
+  
+  .sidenav {
+    width: 200px;
+    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+  }
+  .userprofile {
+    background-color: #3e3e3e;
+    border-radius: 0px;
+    color:#fff;
+    padding: 12px 1px;
+    text-align: center;
+  }
+  .userprofile img {
+    width:51px;
+  }
+  .userprofile > span {
+      width:100%;
+  }
+  mat-sidenav {
+    background-color: #565656;
+  }
+  mat-sidenav:hover {
+    transition: 0.5s;
+  }
+  mat-list-item mat-icon, mat-list-item div h5{
+    color:#fff;
+    font-weight: 100;
+  }
+  .mat-list-base .mat-list-item .mat-list-icon {
+    font-size: 19px;
+  }
+  .mat-badge-medium.mat-badge-after .mat-badge-content {
+    right: -12px;
+    top: -8px;
+}
+.todaydate {
+  font-size: 13px;
+  margin-right: 20px;
+}
+.mat-list-base {
+  padding-top: 0px;
+}
+.mat-nav-list .mat-list-item {
+  border-bottom: 1px solid #6b6a6a;
+  height: 36px;
+}
+.grantpermission .mat-badge-content{
+  background-color: #094fff;
+}
+.popover {
+  background-color: #ffffff;
+  position: absolute;
+  padding: 0px 0px;
+  font-size: 13px;
+  color: #000;
+  box-shadow: 0px 2px 4px 1px #6d6b6b;
+  top: 40px;
+  z-index: 5000;
+  width: 300px;
+}
+.popover h3 {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0px 6px;
+  background-color: #38c7aa;
+  color: #fff;
+}
+.popover i {
+  font-size: 13px;
+}
+.table {
+  width:100%;
+  font: 500 13px/21px Roboto,"Helvetica Neue",sans-serif
+}
+.table tr th {
+  background-color: #e8e8e8;
+}
+.tb-data {
+  max-height: 250px;
+}
+.tbl-sts {
+  color: #fb8520;
+  font-size: 16px;
+  position: relative;
+  top: 3px;
+  margin-left: 3px;
+}
+.tbl-sts2 {
+  font-size: 16px !important;
+  float: right;
+  margin-right: 8px;
+  color: #ff1d1d;
+  position: relative;
+  top: 3px;
+}
+.webini {
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.stsdone {
+  color:#01da01;
+}
+.noprecords {
+  text-align: center;
+  color:red;
+  font-weight: 700;
+}
