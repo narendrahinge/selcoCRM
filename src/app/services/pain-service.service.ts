@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { stringify } from '@angular/core/src/util';
 
 //let apiUrl = 'https://selcoenterprises.com/0webapi/api/';
-let apiUrl = 'https://selcoenterprises.com/0webapibk/0webapi/api/';
+let apiUrl = 'https://oneglobalpharma.com/0webapibk/0webapi/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ let apiUrl = 'https://selcoenterprises.com/0webapibk/0webapi/api/';
 
 export class PainServiceService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public _cookieService: CookieService) { }
 
   postData(credentials, type) {
 
@@ -27,10 +29,23 @@ export class PainServiceService {
   }
 
  
+  get getCookieData() {
+    return this._cookieService.get('loginstatus');
+  }
 
+  setCookieData(key: string, value: string) {
+    const expire = new Date();
+    expire.setMinutes(expire.getMinutes() + 360);
+    this._cookieService.set(key, value, expire);
+  }
+
+  clearCookieData() {
+    this._cookieService.deleteAll();
+  }
 
   login_check() {
-    var sts = localStorage.getItem("login");
+    var sts = this.getCookieData;
+    console.log(sts, 'sts')
     if (sts == undefined) {
       return false;
     } else if (sts == "Yes") {

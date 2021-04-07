@@ -89,6 +89,7 @@ import { OcStatusUpdateBottomSheetUndelivredoc, UndeliveredComponent, Undelivere
 import { AftersalesfollowupOrderDetailsDialog, AsalefollowupComponent, OcStatusUpdateBottomSheetfollowupoc } from './asalefollowup/asalefollowup.component';
 import { WatchqueueComponent } from './asalefollowup/watch-queue-modal/addshipping.component';
 import { CallModalComponent } from './asalefollowup/call-modal/callmodal.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -281,7 +282,7 @@ import { CallModalComponent } from './asalefollowup/call-modal/callmodal.compone
     AngularEditorModule
 
   ],
-  providers: [PainServiceService, ExcelService, PainkillerComponent, AllorderComponent],
+  providers: [CookieService, PainServiceService, ExcelService, PainkillerComponent, AllorderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

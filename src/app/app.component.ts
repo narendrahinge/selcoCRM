@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { PainServiceService } from './services/pain-service.service';
 import { DatePipe } from '@angular/common';
 
@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./app.component.css'],
   providers: [DatePipe]
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy{
   myDate = new Date();
   currDate: String;
   todayOrderi: any;
@@ -93,11 +93,15 @@ export class AppComponent {
   }
 
   Logout() {
+    this.painser.clearCookieData();
     localStorage.removeItem("login");
     window.location.reload();
   }
 
 
+  ngOnDestroy() {
+    this.painser.clearCookieData();
+  }
 
 
 }

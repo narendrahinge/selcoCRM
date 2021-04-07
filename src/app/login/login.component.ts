@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         });
      } else {
       //this._router.navigate(['']);
+      this.painser.setCookieData('loginstatus', 'Yes');
       localStorage.setItem("login","Yes");
       window.location.reload();
      }

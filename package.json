@@ -27,6 +27,7 @@
     "file-saver": "^2.0.1",
     "ng-multiselect-dropdown": "^0.2.3",
     "ng6x-editor": "^4.0.2",
+    "ngx-cookie-service": "^2.1.0",
     "rxjs": "~6.3.3",
     "sweetalert2": "^8.11.1",
     "tslib": "^1.9.0",
